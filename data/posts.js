@@ -19,7 +19,7 @@
 const POSTS = [
 
   {
-    image:    "movie.png",
+    image:    "movie-review.png",
     content:  "<strong>Rab Ne Bana Di Jodi (2008)</strong> — A cinematic vibe, romance, and a retro poster for a classic Indian movie review.",
     postType: "Movie Review",
     date:     "Dec 31, 2025",
@@ -28,7 +28,7 @@ const POSTS = [
   },
 
   {
-    image:    "northernlights.png",
+    image:    "northern-lights.png",
     content:  "<strong>Northern Lights</strong> — Simple images depicting the Northern Lights for a post about general knowledge of the Northern Lights.",
     postType: "General Knowledge",
     date:     "Dec 21, 2025",
@@ -37,7 +37,7 @@ const POSTS = [
   },
 
   {
-    image:    "Sunday Reflection.png",
+    image:    "sunday-reflection.png",
     content:  "<strong>Sunday Reflection</strong> — Read a book and share your thoughts over the weekend, designing with intention rather than urgency.",
     postType: "Self Improvement",
     date:     "Sep 28, 2025",
@@ -46,7 +46,7 @@ const POSTS = [
   },
 
   {
-    image:    "English Class.png",
+    image:    "english-class.png",
     content:  "<strong>English Class</strong> — Visual materials designed for a language learning session.",
     postType: "Education",
     date:     "Oct 4, 2025",
@@ -55,7 +55,7 @@ const POSTS = [
   },
 
   {
-    image:    "find yourself.png",
+    image:    "find-yourself.png",
     content:  "<strong>Find Yourself</strong> — A self-discovery campaign poster exploring identity, purpose, and the quiet journey of becoming who you are.",
     postType: "Self Improvement",
     date:     "Oct 16, 2025",
@@ -64,7 +64,7 @@ const POSTS = [
   },
 
   {
-    image:    "pneumonia day.png",
+    image:    "pneumonia-day.png",
     content:  "<strong>World Pneumonia Day</strong> — Awareness campaign materials designed to clearly communicate health data and inspire community action.",
     postType: "Health Education",
     date:     "Nov 12, 2025",
@@ -73,7 +73,7 @@ const POSTS = [
   },
 
   {
-    image:    "sexual edu.png",
+    image:    "sex-education.png",
     content:  "<strong>Sex Education</strong> — Thoughtful, accessible visuals for youth sexual education, designed to inform without stigma.",
     postType: "Sex Education",
     date:     "Sep 10, 2025",
@@ -82,7 +82,7 @@ const POSTS = [
   },
 
   {
-    image:    "communication skill.png",
+    image:    "communication-skill.png",
     content:  "<strong>Communication Skills</strong> — Workshop poster and slide deck for a soft-skills training programme. Clean hierarchy, strong contrast.",
     postType: "Self Improvement",
     date:     "Oct 9, 2025",
@@ -91,7 +91,7 @@ const POSTS = [
   },
 
   {
-    image:    "Edu Department.png",
+    image:    "edu-department.png",
     content:  "<strong>Education Department</strong> — Institutional visual identity refresh for the Education Department of Highness Luminary. Formal tone with a modern execution.",
     postType: "Education",
     date:     "Feb 12, 2025",
@@ -100,7 +100,7 @@ const POSTS = [
   },
 
   {
-    image:    "Int Day For Preventing.png",
+    image:    "international-day.png",
     content:  "<strong>International Day for Preventing Exploitation</strong> — Awareness poster for a global observance day. Striking, minimal, hard to ignore.",
     postType: "International Day",
     date:     "Nov 6, 2025",
