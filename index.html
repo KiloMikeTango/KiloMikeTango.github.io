@@ -1,63 +1,263 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaung Myat Thu — Portfolio</title>
+  <title>Kaung Myat Thu — Graphic Designer</title>
+  <meta name="description" content="Volunteer visual work by Kaung Myat Thu, created for Highness Luminary.">
 
-  <link rel="icon" type="image/jpeg" href="pfp.jpg">
-  <link rel="apple-touch-icon" href="pfp.jpg">
+  <link rel="icon" type="image/png" href="pfp.png">
+  <link rel="apple-touch-icon" href="pfp.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-  <nav>
-    <a class="nav-brand" href="#">
-      <div class="nav-avatar"><img src="pfp.jpg" alt="Kaung Myat Thu"></div>
+  <!-- ══════════════════════════════
+       NAV — sticky masthead
+  ══════════════════════════════ -->
+  <nav id="nav">
+    <a class="nav-brand" href="#work">
+      <div class="nav-avatar"><img src="pfp.png" alt="Kaung Myat Thu"></div>
       <span class="nav-name">Kaung Myat Thu</span>
     </a>
     <div class="nav-right">
-      <a href="#" class="nav-link">Work</a>
-      <a href="#" class="nav-link">About</a>
-      <a href="#" class="nav-link">Contact</a>
+      <a href="#work" class="nav-link" data-section="work">Work</a>
+      <a href="#about" class="nav-link" data-section="about">About</a>
+      <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
         <span class="toggle-icon icon-sun">☀</span>
         <span class="toggle-icon icon-moon">☽</span>
       </button>
+      <!-- Mobile menu toggle -->
+      <button class="nav-menu-btn" id="navMenuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
+  <!-- Mobile nav drawer -->
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <a href="#work" class="drawer-link" data-section="work">Work</a>
+    <a href="#about" class="drawer-link" data-section="about">About</a>
+    <a href="#contact" class="drawer-link" data-section="contact">Contact</a>
+  </div>
+  <div class="nav-overlay" id="navOverlay"></div>
+
   <main>
-    <div class="feed-wrapper">
 
-      <header class="feed-header">
-        <h1>Just some <em>design</em> work</h1>
-        <div class="feed-header-meta">
-          <span class="edition">Highness Luminary · Vol. I</span>
-          <p>Volunteer visual work created for Highness Luminary.</p>
+    <!-- ══════════════════════════════
+         SECTION 1 — WORK / FEED
+    ══════════════════════════════ -->
+    <section id="work">
+      <div class="section-wrapper">
+
+        <header class="feed-header">
+          <div class="feed-header-left">
+            <h1>Just some <em>design</em> work</h1>
+          </div>
+          <div class="feed-header-meta">
+            <span class="edition">Highness Luminary · Vol. I</span>
+            <p>Volunteer visual work created for Highness Luminary.</p>
+          </div>
+        </header>
+
+        <div class="feed-masthead-rules">
+          <span></span>
+          <span></span>
         </div>
-      </header>
 
-      <div class="feed-masthead-rules">
-        <span></span>
-        <span></span>
+        <div class="feed-divider">Recent work</div>
+
+        <div id="feed"></div>
+
       </div>
+    </section>
 
-      <div class="feed-divider">Recent work</div>
+    <!-- ══════════════════════════════
+         SECTION 2 — ABOUT
+    ══════════════════════════════ -->
+    <section id="about">
+      <div class="section-wrapper">
 
-      <div id="feed"></div>
+        <div class="section-rule">
+          <span></span><span></span>
+        </div>
 
-    </div>
+        <div class="about-grid">
+
+          <div class="about-photo-col">
+            <div class="about-photo-frame">
+              <img src="pfp.png" alt="Kaung Myat Thu" class="about-photo">
+              <div class="about-photo-label">Kaung Myat Thu</div>
+            </div>
+            <div class="about-stats">
+              <div class="about-stat">
+                <span class="stat-num">9+</span>
+                <span class="stat-label">month in learning</span>
+              </div>
+              <div class="about-stat">
+                <span class="stat-num">1</span>
+                <span class="stat-label">Organisation</span>
+              </div>
+              <div class="about-stat">
+                <span class="stat-num">2025</span>
+                <span class="stat-label">Active since</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-text-col">
+            <div class="about-section-label">About</div>
+            <h2 class="about-headline">Design and Code, <br><em>learned</em> by <em>doing</em></h2>
+
+            <div class="about-body">
+              <p>I’m Kaung Myat Thu.
+                I work across <strong>design</strong> and <strong>software development</strong>, learning by building
+                real projects.
+              </p>
+              <p>I’m still figuring things out, improving step by step, and focusing on making things that are clear and
+                useful.</p>
+              <p>Currently open to collaborations.</p>
+            </div>
+
+            <div class="about-skills">
+              <div class="skill-group">
+                <span class="skill-group-label">Craft</span>
+                <div class="skill-tags">
+                  <span>Graphic Design</span>
+                  <span>Software Development</span>
+                  <span>Telegram Bots</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <span class="skill-group-label">Tools</span>
+                <div class="skill-tags">
+                  <span>Canva</span>
+                  <span>Figma</span>
+                  <span>Flutter</span>
+                  <span>Python</span>
+                  <span>Javascript</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         SECTION 3 — CONTACT
+    ══════════════════════════════ -->
+    <section id="contact">
+      <div class="section-wrapper">
+
+        <div class="section-rule">
+          <span></span><span></span>
+        </div>
+
+        <div class="contact-grid">
+
+          <div class="contact-left">
+            <div class="about-section-label">Contact</div>
+            <h2 class="contact-headline">Let's make<br><em>something</em><br>together.</h2>
+            <p class="contact-sub">Available for collaborations.</p>
+
+            <div class="contact-details">
+              <a href="mailto:thuk6810@gmail.com" class="contact-item">
+                <span class="contact-item-label">Email</span>
+                <span class="contact-item-value">thuk6810@gmail.com</span>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              </a>
+              <div class="contact-item no-link">
+                <span class="contact-item-label">Telegram</span>
+                <span class="contact-item-value">@Kilo532</span>
+              </div>
+              <div class="contact-item no-link">
+                <span class="contact-item-label">Based in</span>
+                <span class="contact-item-value">Myanmar</span>
+              </div>
+              <div class="contact-item no-link">
+                <span class="contact-item-label">Availability</span>
+                <span class="contact-item-value">
+                  <span class="avail-dot"></span> Open to projects
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-right">
+            <form class="contact-form" id="contactForm" novalidate>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="fname">Name</label>
+                  <input type="text" id="fname" name="name" placeholder="Your name" autocomplete="name">
+                  <span class="field-error" id="fname-error"></span>
+                </div>
+                <div class="form-field">
+                  <label for="femail">Email</label>
+                  <input type="email" id="femail" name="email" placeholder="your@email.com" autocomplete="email">
+                  <span class="field-error" id="femail-error"></span>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="fsubject">Subject</label>
+                <input type="text" id="fsubject" name="subject" placeholder="Project brief, collaboration...">
+              </div>
+              <div class="form-field">
+                <label for="fmessage">Message</label>
+                <textarea id="fmessage" name="message" rows="5"
+                  placeholder="Tell me about what you're working on..."></textarea>
+                <span class="field-error" id="fmessage-error"></span>
+              </div>
+              <button type="submit" class="form-submit" id="formSubmit">
+                <span class="submit-text">Send message</span>
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              </button>
+              <p class="form-note">This sends an email directly to my inbox.</p>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
+  <!-- ══════════════════════════════
+       FOOTER
+  ══════════════════════════════ -->
   <footer>
-    &copy; 2026 Kaung Myat Thu &middot; Available for projects &middot; thuk6810@gmail.com
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-name">Kaung Myat Thu</span>
+        <span class="footer-role">Graphic Design · Software Development</span>
+      </div>
+      <div class="footer-center">
+        &copy; 2026 · All rights reserved
+      </div>
+      <div class="footer-right">
+        <a href="mailto:thuk6810@gmail.com" class="footer-link">thuk6810@gmail.com</a>
+      </div>
+    </div>
   </footer>
 
+  <!-- Lightbox -->
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
     <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
     <div class="lightbox-inner">
@@ -67,11 +267,16 @@
     </div>
   </div>
 
+  <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
   <script src="data/posts.js"></script>
   <script src="js/renderer.js"></script>
   <script src="js/main.js"></script>
 
 </body>
+
 </html>

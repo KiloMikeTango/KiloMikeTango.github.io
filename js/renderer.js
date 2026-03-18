@@ -4,7 +4,7 @@
  */
 
 const AUTHOR_NAME = 'Kaung Myat Thu';
-const AUTHOR_PFP  = 'pfp.jpg';
+const AUTHOR_PFP  = 'pfp.png';
 
 /**
  * Smart image path:
