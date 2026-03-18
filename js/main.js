@@ -19,16 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ══════════════════════════════
-   THEME
+   THEME — light only
 ══════════════════════════════ */
 function initTheme() {
-  const saved = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', saved);
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-  });
+  // Dark mode removed — light theme only
+  localStorage.removeItem('theme');
 }
 
 /* ══════════════════════════════
