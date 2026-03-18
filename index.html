@@ -1,63 +1,54 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaung Myat Thu — Graphic Designer</title>
+  <title>Kaung Myat Thu — Portfolio</title>
   <meta name="description" content="Volunteer visual work by Kaung Myat Thu, created for Highness Luminary.">
 
-  <link rel="icon" type="image/png" href="pfp.png">
-  <link rel="apple-touch-icon" href="pfp.png">
+  <!-- SVG favicon — "K" lettermark -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
 
-  <!-- ══════════════════════════════
-       NAV — sticky masthead
-  ══════════════════════════════ -->
+  <!-- NAV -->
   <nav id="nav">
     <a class="nav-brand" href="#work">
       <div class="nav-avatar"><img src="pfp.png" alt="Kaung Myat Thu"></div>
       <span class="nav-name">Kaung Myat Thu</span>
     </a>
     <div class="nav-right">
-      <a href="#work" class="nav-link" data-section="work">Work</a>
-      <a href="#about" class="nav-link" data-section="about">About</a>
+      <a href="#work"    class="nav-link" data-section="work">Work</a>
+      <a href="#about"   class="nav-link" data-section="about">About</a>
       <a href="#contact" class="nav-link" data-section="contact">Contact</a>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
         <span class="toggle-icon icon-sun">☀</span>
         <span class="toggle-icon icon-moon">☽</span>
       </button>
-      <!-- Mobile menu toggle -->
       <button class="nav-menu-btn" id="navMenuBtn" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile nav drawer -->
+  <!-- Mobile drawer -->
   <div class="nav-drawer" id="navDrawer" aria-hidden="true">
-    <a href="#work" class="drawer-link" data-section="work">Work</a>
-    <a href="#about" class="drawer-link" data-section="about">About</a>
+    <a href="#work"    class="drawer-link" data-section="work">Work</a>
+    <a href="#about"   class="drawer-link" data-section="about">About</a>
     <a href="#contact" class="drawer-link" data-section="contact">Contact</a>
   </div>
   <div class="nav-overlay" id="navOverlay"></div>
 
   <main>
 
-    <!-- ══════════════════════════════
-         SECTION 1 — WORK / FEED
-    ══════════════════════════════ -->
+    <!-- ── SECTION 1 · WORK ── -->
     <section id="work">
       <div class="section-wrapper">
-
         <header class="feed-header">
           <div class="feed-header-left">
             <h1>Just some <em>design</em> work</h1>
@@ -67,23 +58,14 @@
             <p>Volunteer visual work created for Highness Luminary.</p>
           </div>
         </header>
-
-        <div class="feed-masthead-rules">
-          <span></span>
-          <span></span>
-        </div>
-
+        <div class="feed-masthead-rules"><span></span><span></span></div>
         <div class="feed-divider">Recent work</div>
-
         <div id="feed"></div>
-
       </div>
     </section>
 
-    <!-- ══════════════════════════════
-         SECTION 2 — ABOUT
-    ══════════════════════════════ -->
-    <section id="about">
+    <!-- ── SECTION 2 · ABOUT ── -->
+  <section id="about">
       <div class="section-wrapper">
 
         <div class="section-rule">
@@ -115,7 +97,7 @@
 
           <div class="about-text-col">
             <div class="about-section-label">About</div>
-            <h2 class="about-headline">Design and Code, <br><em>learned</em> by <em>doing</em></h2>
+            <h2 class="about-headline">Design and Code, <br><em>learned by doing</em></h2>
 
             <div class="about-body">
               <p>I’m Kaung Myat Thu.
@@ -154,103 +136,94 @@
       </div>
     </section>
 
-    <!-- ══════════════════════════════
-         SECTION 3 — CONTACT
-    ══════════════════════════════ -->
+    <!-- ── SECTION 3 · CONTACT ── -->
     <section id="contact">
       <div class="section-wrapper">
+        <div class="section-rule"><span></span><span></span></div>
 
-        <div class="section-rule">
-          <span></span><span></span>
-        </div>
+        <div class="contact-centered">
 
-        <div class="contact-grid">
+          <div class="about-section-label">Contact</div>
+          <h2 class="contact-headline">Let's make <em>something</em> together.</h2>
+          <p class="contact-sub">Available for collaborations.</p>
 
-          <div class="contact-left">
-            <div class="about-section-label">Contact</div>
-            <h2 class="contact-headline">Let's make<br><em>something</em><br>together.</h2>
-            <p class="contact-sub">Available for collaborations.</p>
+          <div class="contact-cards">
 
-            <div class="contact-details">
-              <a href="mailto:thuk6810@gmail.com" class="contact-item">
-                <span class="contact-item-label">Email</span>
-                <span class="contact-item-value">thuk6810@gmail.com</span>
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M3 8h10M9 4l4 4-4 4" />
+            <!-- Email — click to copy -->
+            <button class="contact-card" data-copy="thuk6810@gmail.com" aria-label="Copy email address">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="M2 7l10 7 10-7"/>
                 </svg>
-              </a>
-              <div class="contact-item no-link">
-                <span class="contact-item-label">Telegram</span>
-                <span class="contact-item-value">@Kilo532</span>
               </div>
-              <div class="contact-item no-link">
-                <span class="contact-item-label">Based in</span>
-                <span class="contact-item-value">Myanmar</span>
+              <div class="contact-card-body">
+                <span class="contact-card-label">Email</span>
+                <span class="contact-card-value">thuk6810@gmail.com</span>
               </div>
-              <div class="contact-item no-link">
-                <span class="contact-item-label">Availability</span>
-                <span class="contact-item-value">
-                  <span class="avail-dot"></span> Open to projects
-                </span>
+              <div class="contact-card-action">
+                <span class="copy-hint">Click to copy</span>
+                <svg class="copy-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="5" y="5" width="9" height="9" rx="1"/>
+                  <path d="M10 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Telegram — click to copy -->
+            <button class="contact-card" data-copy="@Kilo532" aria-label="Copy Telegram username">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21.2 4.3L2.8 11.2c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.5c.2.6.5.8.9.8.3 0 .6-.1.9-.4l2.7-2.6 5.2 3.8c1 .5 1.6.3 1.9-.9l3.2-15c.4-1.5-.6-2.2-1.6-1.9z"/>
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <span class="contact-card-label">Telegram</span>
+                <span class="contact-card-value">@Kilo532</span>
+              </div>
+              <div class="contact-card-action">
+                <span class="copy-hint">Click to copy</span>
+                <svg class="copy-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="5" y="5" width="9" height="9" rx="1"/>
+                  <path d="M10 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/>
+                </svg>
+              </div>
+            </button>
+
+            <!-- Location — no copy -->
+            <div class="contact-card no-copy">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+              </div>
+              <div class="contact-card-body">
+                <span class="contact-card-label">Based in</span>
+                <span class="contact-card-value">Myanmar</span>
+              </div>
+              <div class="contact-card-action">
+                <span class="avail-dot"></span>
+                <span class="copy-hint">Open to projects</span>
               </div>
             </div>
-          </div>
 
-          <div class="contact-right">
-            <form class="contact-form" id="contactForm" novalidate>
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="fname">Name</label>
-                  <input type="text" id="fname" name="name" placeholder="Your name" autocomplete="name">
-                  <span class="field-error" id="fname-error"></span>
-                </div>
-                <div class="form-field">
-                  <label for="femail">Email</label>
-                  <input type="email" id="femail" name="email" placeholder="your@email.com" autocomplete="email">
-                  <span class="field-error" id="femail-error"></span>
-                </div>
-              </div>
-              <div class="form-field">
-                <label for="fsubject">Subject</label>
-                <input type="text" id="fsubject" name="subject" placeholder="Project brief, collaboration...">
-              </div>
-              <div class="form-field">
-                <label for="fmessage">Message</label>
-                <textarea id="fmessage" name="message" rows="5"
-                  placeholder="Tell me about what you're working on..."></textarea>
-                <span class="field-error" id="fmessage-error"></span>
-              </div>
-              <button type="submit" class="form-submit" id="formSubmit">
-                <span class="submit-text">Send message</span>
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path d="M3 8h10M9 4l4 4-4 4" />
-                </svg>
-              </button>
-              <p class="form-note">This sends an email directly to my inbox.</p>
-            </form>
           </div>
 
         </div>
-
       </div>
     </section>
 
   </main>
 
-  <!-- ══════════════════════════════
-       FOOTER
-  ══════════════════════════════ -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
       <div class="footer-left">
         <span class="footer-name">Kaung Myat Thu</span>
-        <span class="footer-role">Graphic Design · Software Development</span>
+        <span class="footer-role">Graphic Design · Software Developement</span>
       </div>
-      <div class="footer-center">
-        &copy; 2026 · All rights reserved
-      </div>
+      <div class="footer-center">&copy; 2026 · All rights reserved</div>
       <div class="footer-right">
         <a href="mailto:thuk6810@gmail.com" class="footer-link">thuk6810@gmail.com</a>
       </div>
@@ -267,16 +240,11 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Back to top -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
   <script src="data/posts.js"></script>
   <script src="js/renderer.js"></script>
   <script src="js/main.js"></script>
-
 </body>
-
 </html>

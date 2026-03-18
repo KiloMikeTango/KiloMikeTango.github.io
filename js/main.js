@@ -2,13 +2,11 @@
  * main.js
  * Portfolio bootstrap — feed, lazy images, theme, lightbox,
  * interactions, mobile nav, active nav links, back-to-top,
- * contact form validation.
+ * contact card copy-on-click.
  */
 
-/* ── Like state ── */
 const likeState = {};
 
-/* ── Init ── */
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   buildFeed();
@@ -17,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initMobileNav();
   initScrollBehavior();
-  initContactForm();
+  initContactCards();
 });
 
 /* ══════════════════════════════
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function initTheme() {
   const saved = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', saved);
-
   document.getElementById('themeToggle').addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', next);
@@ -138,28 +135,22 @@ function initMobileNav() {
   const drawer  = document.getElementById('navDrawer');
   const overlay = document.getElementById('navOverlay');
 
-  function openMenu() {
+  const openMenu  = () => {
     btn.classList.add('open');
     btn.setAttribute('aria-expanded', 'true');
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
-  }
-  function closeMenu() {
+  };
+  const closeMenu = () => {
     btn.classList.remove('open');
     btn.setAttribute('aria-expanded', 'false');
     drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
-  }
+  };
 
   btn.addEventListener('click', () => btn.classList.contains('open') ? closeMenu() : openMenu());
   overlay.addEventListener('click', closeMenu);
-
-  // Close drawer when a drawer link is clicked
-  drawer.querySelectorAll('.drawer-link').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-
-  // Close on Escape
+  drawer.querySelectorAll('.drawer-link').forEach(l => l.addEventListener('click', closeMenu));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 }
 
@@ -168,25 +159,18 @@ function initMobileNav() {
 ══════════════════════════════ */
 function initScrollBehavior() {
   const btt      = document.getElementById('backToTop');
-  const sections = ['work', 'about', 'contact'];
   const navLinks = document.querySelectorAll('.nav-link[data-section]');
 
   btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   const io = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const id = entry.target.id;
-        navLinks.forEach(l => {
-          l.classList.toggle('active', l.dataset.section === id);
-        });
-      });
-    },
+    entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === entry.target.id));
+    }),
     { rootMargin: '-30% 0px -60% 0px' }
   );
-
-  sections.forEach(id => {
+  ['work', 'about', 'contact'].forEach(id => {
     const el = document.getElementById(id);
     if (el) io.observe(el);
   });
@@ -197,72 +181,27 @@ function initScrollBehavior() {
 }
 
 /* ══════════════════════════════
-   CONTACT FORM
+   CONTACT CARDS — copy on click
 ══════════════════════════════ */
-function initContactForm() {
-  const form = document.getElementById('contactForm');
-  if (!form) return;
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    if (!validateForm(form)) return;
-
-    const btn  = document.getElementById('formSubmit');
-    const text = btn.querySelector('.submit-text');
-
-    btn.disabled = true;
-    text.textContent = 'Sending...';
-
-    // Build mailto and open — works without a backend
-    const name    = form.name.value.trim();
-    const email   = form.email.value.trim();
-    const subject = form.subject.value.trim() || 'Portfolio enquiry';
-    const message = form.message.value.trim();
-
-    const body = encodeURIComponent(
-      `From: ${name} <${email}>\n\n${message}`
-    );
-    const mailtoUrl = `mailto:thuk6810@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-
-    window.location.href = mailtoUrl;
-
-    setTimeout(() => {
-      btn.disabled = false;
-      text.textContent = 'Send message';
-      form.reset();
-      showToast('Opening your mail client…');
-    }, 800);
+function initContactCards() {
+  document.querySelectorAll('.contact-card[data-copy]').forEach(card => {
+    card.addEventListener('click', () => {
+      const text = card.dataset.copy;
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          card.classList.add('copied');
+          const hint = card.querySelector('.copy-hint');
+          const original = hint.textContent;
+          hint.textContent = 'Copied!';
+          showToast(`"${text}" copied`);
+          setTimeout(() => {
+            card.classList.remove('copied');
+            hint.textContent = original;
+          }, 2200);
+        })
+        .catch(() => showToast('Could not copy — try manually'));
+    });
   });
-
-  // Live validation on blur
-  ['fname', 'femail', 'fmessage'].forEach(id => {
-    const input = document.getElementById(id);
-    if (input) input.addEventListener('blur', () => validateField(input));
-  });
-}
-
-function validateForm(form) {
-  let valid = true;
-  if (!validateField(document.getElementById('fname')))    valid = false;
-  if (!validateField(document.getElementById('femail')))   valid = false;
-  if (!validateField(document.getElementById('fmessage'))) valid = false;
-  return valid;
-}
-
-function validateField(input) {
-  if (!input) return true;
-  const errorEl = document.getElementById(input.id + '-error');
-  let msg = '';
-
-  if (!input.value.trim()) {
-    msg = 'This field is required.';
-  } else if (input.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
-    msg = 'Please enter a valid email.';
-  }
-
-  if (errorEl) errorEl.textContent = msg;
-  input.classList.toggle('error', !!msg);
-  return !msg;
 }
 
 /* ══════════════════════════════

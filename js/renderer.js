@@ -6,11 +6,6 @@
 const AUTHOR_NAME = 'Kaung Myat Thu';
 const AUTHOR_PFP  = 'pfp.png';
 
-/**
- * Smart image path:
- *   full URL  → use as-is
- *   filename  → prepend images/
- */
 function resolveImage(src) {
   if (!src) return '';
   if (src.startsWith('http') || src.startsWith('/') || src.startsWith('./')) return src;
