@@ -20,7 +20,7 @@ const POSTS = [
 
   {
     image:    "movie.png",
-    content:  "<strong>Rab Ne Bana Di Jodi (2008)</strong> — A cinema vibe, romance and retro poster for a classic Indian movie.",
+    content:  "<strong>Rab Ne Bana Di Jodi (2008)</strong> — A cinematic vibe, romance, and a retro poster for a classic Indian movie review.",
     postType: "Movie Review",
     date:     "Dec 31, 2025",
     likes:    287,
@@ -29,7 +29,7 @@ const POSTS = [
 
   {
     image:    "northernlights.png",
-    content:  "<strong>Vela Finance</strong> — Dashboard redesign for a fintech startup targeting Gen Z investors. Dark-first system with high-contrast data ink and type that scales from micro labels to hero numerics.",
+    content:  "<strong>Northern Lights</strong> — Simple images depicting the Northern Lights for a post about general knowledge of the Northern Lights.",
     postType: "General Knowledge",
     date:     "Dec 21, 2025",
     likes:    543,
@@ -38,7 +38,7 @@ const POSTS = [
 
   {
     image:    "Sunday Reflection.png",
-    content:  "<strong>Sunday Reflection</strong> — Read book and share thoughts at weekend and designing with intention rather than urgency.",
+    content:  "<strong>Sunday Reflection</strong> — Read a book and share your thoughts over the weekend, designing with intention rather than urgency.",
     postType: "Self Improvement",
     date:     "Sep 28, 2025",
     likes:    203,
@@ -56,7 +56,7 @@ const POSTS = [
 
   {
     image:    "find yourself.png",
-    content:  "<strong>Find Yourself</strong> — A self-discovery campaign poster exploring identity, purpose, and the quiet work of becoming who you are.",
+    content:  "<strong>Find Yourself</strong> — A self-discovery campaign poster exploring identity, purpose, and the quiet journey of becoming who you are.",
     postType: "Self Improvement",
     date:     "Oct 16, 2025",
     likes:    119,
@@ -65,7 +65,7 @@ const POSTS = [
 
   {
     image:    "pneumonia day.png",
-    content:  "<strong>World Pneumonia Day</strong> — Awareness campaign materials designed to communicate health data clearly and drive community action.",
+    content:  "<strong>World Pneumonia Day</strong> — Awareness campaign materials designed to clearly communicate health data and inspire community action.",
     postType: "Health Education",
     date:     "Nov 12, 2025",
     likes:    197,
@@ -74,7 +74,7 @@ const POSTS = [
 
   {
     image:    "sexual edu.png",
-    content:  "<strong>Sex Education</strong> — Thoughtful, accessible visuals for a youth sexual education. Designed to inform without stigma.",
+    content:  "<strong>Sex Education</strong> — Thoughtful, accessible visuals for youth sexual education, designed to inform without stigma.",
     postType: "Sex Education",
     date:     "Sep 10, 2025",
     likes:    339,
@@ -92,7 +92,7 @@ const POSTS = [
 
   {
     image:    "Edu Department.png",
-    content:  "<strong>Education Department</strong> — Institutional visual identity refresh for a Highness Luminary's education department. Formal tone, modern execution.",
+    content:  "<strong>Education Department</strong> — Institutional visual identity refresh for the Education Department of Highness Luminary. Formal tone with a modern execution.",
     postType: "Education",
     date:     "Feb 12, 2025",
     likes:    521,
