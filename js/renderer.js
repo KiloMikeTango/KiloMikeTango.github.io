@@ -1,6 +1,7 @@
 /**
  * renderer.js
- * Builds post HTML from data/posts.js objects.
+ * Newspaper "piece" layout — image dominant, editorial caption below.
+ * No cramped header bar. Each piece = press photo + headline + byline.
  */
 
 const AUTHOR_NAME = 'Kaung Myat Thu';
@@ -16,49 +17,62 @@ function renderPost(post) {
   const { _id, content, postType, date, likes = 0, alt = '' } = post;
   const image = resolveImage(post.image);
 
+  // Strip strong tags to get a clean title (first bolded word group)
+  const titleMatch = content.match(/<strong>(.*?)<\/strong>/);
+  const title = titleMatch ? titleMatch[1] : postType;
+
+  // Body text without the strong title prefix
+  const body = content.replace(/<strong>.*?<\/strong>\s*[—–-]\s*/, '');
+
   return /* html */ `
-    <article class="post" data-id="${_id}">
+    <article class="piece" data-id="${_id}">
 
-      <div class="post-header">
-        <div class="post-avatar">
-          <img src="${AUTHOR_PFP}" alt="${AUTHOR_NAME}">
-        </div>
-        <div class="post-meta">
-          <div class="post-author-row">
-            <span class="post-author">${AUTHOR_NAME}</span>
-            <span class="verified-badge" title="Verified">${svgCheckmark()}</span>
-          </div>
-          <div class="post-date-row">
-            <span class="post-date">${date}</span>
-            <span class="post-tag">${postType}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="post-image-wrap" data-img="${image}" data-caption="${postType}">
+      <!-- Press photo — image fills the piece, no padding -->
+      <div class="piece-photo" data-img="${image}" data-caption="${title}">
         <div class="skeleton-img" id="sk-${_id}"></div>
         <img id="img-${_id}" src="" data-src="${image}" alt="${alt}" loading="lazy">
-        <div class="image-overlay">
-          <div class="zoom-icon">${svgZoom()}</div>
+        <div class="piece-photo-overlay">
+          <div class="piece-zoom">${svgZoom()}</div>
         </div>
+        <!-- Category stamp — top-left corner like a section flag -->
+        <div class="piece-flag">${postType}</div>
       </div>
 
-      <div class="post-body">
-        <p class="post-caption">${content}</p>
+      <!-- Editorial matter below the photo -->
+      <div class="piece-editorial">
+
+        <!-- Headline — the story title in Anton -->
+        <h3 class="piece-title">${title}</h3>
+
+        <!-- Deck rule — thin rule between headline and body -->
+        <div class="piece-rule"></div>
+
+        <!-- Body copy — the caption as editorial text -->
+        <p class="piece-body">${body}</p>
+
+        <!-- Byline strip — author + date, small caps -->
+        <div class="piece-byline">
+          <img src="${AUTHOR_PFP}" class="piece-byline-pfp" alt="${AUTHOR_NAME}">
+          <span class="piece-byline-author">${AUTHOR_NAME}</span>
+          <span class="piece-byline-dot">·</span>
+          <span class="piece-byline-date">${date}</span>
+        </div>
+
       </div>
 
-      <div class="post-actions">
-        <button class="action-btn like-btn" data-id="${_id}" aria-label="Like">
+      <!-- Actions — minimal, flush bottom -->
+      <div class="piece-actions">
+        <button class="piece-btn like-btn" data-id="${_id}" aria-label="Like">
           ${svgHeart(false)}
           <span class="like-count">${likes}</span>
         </button>
-        <button class="action-btn share-btn" data-id="${_id}" data-src="${image}" aria-label="Share">
-          ${svgShare()} Share
+        <button class="piece-btn share-btn" data-id="${_id}" data-src="${image}" aria-label="Share">
+          ${svgShare()}
         </button>
-        <span class="action-spacer"></span>
-        <button class="action-btn view-btn"
-                data-img="${image}" data-caption="${postType}" aria-label="View full image">
-          ${svgEye()} View
+        <span class="piece-actions-spacer"></span>
+        <button class="piece-btn view-btn"
+                data-img="${image}" data-caption="${title}" aria-label="View">
+          ${svgExpand()} View full
         </button>
       </div>
 
@@ -66,8 +80,9 @@ function renderPost(post) {
   `;
 }
 
+/* ── SVGs ── */
 function svgCheckmark() {
-  return `<svg viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+  return `<svg viewBox="0 0 8 8" fill="none">
     <path d="M1.5 4L3 5.5L6.5 2.5" stroke="white" stroke-width="1.4"
           stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`;
@@ -84,9 +99,10 @@ function svgHeart(filled) {
 function svgShare() {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-    <polyline points="16 6 12 2 8 6"/>
-    <line x1="12" y1="2" x2="12" y2="15"/>
+    <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
+    <circle cx="18" cy="19" r="3"/>
+    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
   </svg>`;
 }
 function svgZoom() {
@@ -95,13 +111,15 @@ function svgZoom() {
     <circle cx="11" cy="11" r="8"/>
     <path d="M21 21l-4.35-4.35"/>
     <line x1="11" y1="8" x2="11" y2="14"/>
-    <line x1="8"  y1="11" x2="14" y2="11"/>
+    <line x1="8" y1="11" x2="14" y2="11"/>
   </svg>`;
 }
-function svgEye() {
+function svgExpand() {
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-    <circle cx="12" cy="12" r="3"/>
+    <polyline points="15 3 21 3 21 9"/>
+    <polyline points="9 21 3 21 3 15"/>
+    <line x1="21" y1="3" x2="14" y2="10"/>
+    <line x1="3" y1="21" x2="10" y2="14"/>
   </svg>`;
 }

@@ -236,114 +236,71 @@ body::before {
 }
 
 /* ══════════════════════════════
-   MASONRY GRID
-   Column gap = 1px rule line
-   matching newspaper column rules
+   FEED GRID
+   CSS columns — pieces flow into
+   columns like a real newspaper.
+   Column rule = the ink separator.
 ══════════════════════════════ */
 #feed {
   column-count: 3;
   column-gap: 0;
-  /* The column rules ARE the gap — classic newspaper column separator */
   column-rule: 1px solid var(--rule);
 }
 
 /* ══════════════════════════════
-   POST CARD — Newspaper column style
-   Each card = a newspaper story box
-   Heavy ruled border, inner double
-   rule at top like a section header
+   PIECE — newspaper story unit
+   Image dominant. No cramped header.
+   Each piece = press photo + editorial.
+
+   Structure:
+   ┌─────────────────────┐
+   │  [FLAG]             │  ← category stamp
+   │                     │
+   │    PRESS PHOTO      │
+   │                     │
+   ├─────────────────────┤  ← thin rule
+   │  HEADLINE           │  ← Anton, large
+   │  ────────           │  ← deck rule
+   │  Body copy text     │
+   │  runs freely...     │
+   │                     │
+   │  pfp  Byline · date │
+   ├─────────────────────┤
+   │  ♡  Share     View  │
+   └─────────────────────┘
 ══════════════════════════════ */
-article.post {
+article.piece {
   display: inline-block; width: 100%;
   break-inside: avoid; -webkit-column-break-inside: avoid;
   background: var(--surface);
-  /* Outer border — story box frame */
   border: 1px solid var(--border2);
   border-radius: 0;
   margin-bottom: 0;
-  padding-bottom: 1px;
-  box-shadow: none; overflow: hidden; vertical-align: top; position: relative;
+  vertical-align: top; position: relative;
   transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
 }
-article.post:hover {
+article.piece:hover {
   box-shadow: var(--shadow-hover);
   transform: translate(-2px, -2px);
   z-index: 2;
 }
 
-/* Top rule strip — double rule like a newspaper section head */
-article.post::before {
-  content: '';
-  display: block;
-  height: 5px;
-  background:
-    linear-gradient(180deg,
-      var(--text) 0px, var(--text) 3px,
-      transparent 3px, transparent 4px,
-      var(--border2) 4px, var(--border2) 5px
-    );
-}
-
-/* ── Post header ── */
-.post-header {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 12px 8px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-}
-.post-avatar {
-  width: 24px; height: 24px; border-radius: 0;
-  background: var(--bg3); overflow: hidden; flex-shrink: 0;
-  border: 1px solid var(--border2);
-}
-.post-avatar img {
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center; display: block;
-  filter: grayscale(15%);
-}
-.post-meta { flex: 1; min-width: 0; }
-.post-author-row { display: flex; align-items: center; gap: 5px; }
-.post-author {
-  font-family: 'Anton', 'Impact', sans-serif;
-  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--text); line-height: 1.2;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.verified-badge {
-  width: 11px; height: 11px; border-radius: 0; background: var(--text);
-  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.verified-badge svg { width: 6px; height: 6px; }
-.post-date-row { display: flex; align-items: center; gap: 5px; margin-top: 1px; flex-wrap: wrap; }
-.post-date {
-  font-size: 8.5px; color: var(--text3);
-  letter-spacing: 0.08em; text-transform: uppercase;
-}
-.post-tag {
-  font-size: 7.5px; font-weight: 700;
-  letter-spacing: 0.10em; text-transform: uppercase;
-  color: var(--tag); background: var(--tag-bg);
-  padding: 1px 5px; border-radius: 0; white-space: nowrap;
-}
-
-/* ── Image — full bleed inside the story box ── */
-.post-image-wrap {
+/* ── Press photo ── */
+.piece-photo {
   position: relative; overflow: hidden; cursor: zoom-in;
   background: var(--skeleton);
-  /* Thin rule above and below image — classic press photo treatment */
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border2);
 }
-.post-image-wrap img {
+.piece-photo img {
   display: block; width: 100%; height: auto; opacity: 0;
-  transition: opacity 0.4s ease, filter 0.4s ease;
-  filter: grayscale(6%);
+  transition: opacity 0.42s ease, filter 0.42s ease;
+  filter: grayscale(5%);
 }
-.post-image-wrap img.loaded { opacity: 1; }
-.post-image-wrap:hover img { filter: grayscale(0%); }
+.piece-photo img.loaded { opacity: 1; }
+.piece-photo:hover img { filter: grayscale(0%); transform: scale(1.02); transition: opacity 0.42s ease, filter 0.42s ease, transform 0.55s var(--ease); }
 
+/* Skeleton shimmer */
 .skeleton-img {
-  position: absolute; inset: 0; min-height: 180px;
+  position: absolute; inset: 0; min-height: 200px;
   background: var(--skeleton);
   background-image: linear-gradient(90deg, var(--skeleton) 0%, var(--skeleton-shine) 50%, var(--skeleton) 100%);
   background-size: 200% 100%; animation: shimmer 1.6s infinite; transition: opacity 0.4s ease;
@@ -354,14 +311,16 @@ article.post::before {
   100% { background-position: -200% 0; }
 }
 
-.image-overlay {
+/* Overlay — ink wash on hover */
+.piece-photo-overlay {
   position: absolute; inset: 0; background: rgba(14,12,7,0);
   display: flex; align-items: center; justify-content: center;
   transition: background 0.3s ease;
 }
-.post-image-wrap:hover .image-overlay { background: rgba(14,12,7,0.08); }
+.piece-photo:hover .piece-photo-overlay { background: rgba(14,12,7,0.10); }
 
-.zoom-icon {
+/* Zoom button */
+.piece-zoom {
   width: 34px; height: 34px; border-radius: 0;
   background: var(--surface); border: 1.5px solid var(--text);
   box-shadow: 2px 2px 0 var(--text);
@@ -369,37 +328,108 @@ article.post::before {
   opacity: 0; transform: scale(0.75);
   transition: opacity 0.18s ease, transform 0.2s var(--spring);
 }
-.post-image-wrap:hover .zoom-icon { opacity: 1; transform: scale(1); }
-.zoom-icon svg { width: 13px; height: 13px; color: var(--text); }
+.piece-photo:hover .piece-zoom { opacity: 1; transform: scale(1); }
+.piece-zoom svg { width: 13px; height: 13px; color: var(--text); }
 
-/* ── Caption — editorial body copy ── */
-.post-body { padding: 10px 12px 0; }
-.post-caption { font-size: 12px; line-height: 1.72; color: var(--text2); }
-.post-caption strong { color: var(--text); font-weight: 600; }
-
-/* ── Actions ── */
-.post-actions {
-  display: flex; align-items: center; gap: 0;
-  padding: 6px 10px 8px;
-  border-top: 1px solid var(--border); margin-top: 9px;
+/* Category flag — top-left stamp like a newspaper section label */
+.piece-flag {
+  position: absolute; top: 0; left: 0;
+  background: var(--text); color: var(--surface);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 4px 8px;
+  z-index: 2;
 }
-.action-btn {
+
+/* ── Editorial matter ── */
+.piece-editorial {
+  padding: 16px 16px 12px;
+  border-top: 3px solid var(--text);
+}
+
+/* Headline — big Anton, the story title */
+.piece-title {
+  font-family: 'Anton', 'Impact', sans-serif;
+  font-size: clamp(16px, 2.2vw, 22px);
+  font-weight: 400; letter-spacing: 0.01em;
+  line-height: 1.0; text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+/* Deck rule — the thin line between headline and body */
+.piece-rule {
+  height: 1px; background: var(--border2);
+  margin-bottom: 9px;
+}
+/* Double rule effect — add a gap and second line */
+.piece-rule::after {
+  content: '';
+  display: block; height: 1px;
+  background: var(--border);
+  margin-top: 2px;
+}
+
+/* Body copy — editorial paragraph, reads like a real article */
+.piece-body {
+  font-size: 12px; line-height: 1.75;
+  color: var(--text2);
+  /* 2-column text layout for wider pieces — feels like a real broadsheet */
+  margin-bottom: 14px;
+  /* Clamp body copy — show a taste, not the whole thing */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Byline strip — small caps, press photo credit style */
+.piece-byline {
+  display: flex; align-items: center; gap: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+.piece-byline-pfp {
+  width: 18px; height: 18px; border-radius: 0;
+  object-fit: cover; object-position: center;
+  border: 1px solid var(--border2); flex-shrink: 0;
+  filter: grayscale(20%);
+}
+.piece-byline-author {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--text2);
+}
+.piece-byline-dot { font-size: 9px; color: var(--text3); }
+.piece-byline-date {
+  font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text3);
+}
+
+/* ── Actions — slim bottom strip ── */
+.piece-actions {
+  display: flex; align-items: center; gap: 0;
+  padding: 6px 12px 8px;
+  border-top: 1px solid var(--border);
+}
+.piece-btn {
   display: flex; align-items: center; gap: 4px;
   background: none; border: none; cursor: pointer;
   font-family: 'DM Sans', sans-serif;
   font-size: 8.5px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text3); padding: 4px 8px; border-radius: 0; white-space: nowrap;
+  color: var(--text3); padding: 4px 7px; border-radius: 0; white-space: nowrap;
   transition: color var(--t) var(--ease), background var(--t) var(--ease);
   min-height: 28px;
 }
-.action-btn:hover { color: var(--text); background: var(--bg2); }
-.action-btn:active { opacity: 0.7; }
-.action-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+.piece-btn:hover { color: var(--text); background: var(--bg2); }
+.piece-btn:active { opacity: 0.7; }
+.piece-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
 .like-btn.liked     { color: var(--like); }
 .like-btn.liked svg { fill: var(--like); stroke: var(--like); }
 .share-btn.copied   { color: var(--text); }
-.action-spacer      { flex: 1; }
+.piece-actions-spacer { flex: 1; }
 
 /* ══════════════════════════════
    SECTION 2 — ABOUT
@@ -813,16 +843,13 @@ footer { background: var(--text); border-top: 3px solid var(--text); }
   .feed-masthead-rules span:nth-child(1) { height: 3px; }
   .feed-divider { margin-bottom: 14px; }
 
-  .post-header { padding: 7px 9px 6px; gap: 6px; }
-  .post-avatar { width: 20px; height: 20px; }
-  .post-author { font-size: 9.5px; }
-  .post-date { font-size: 7.5px; }
-  .post-tag { font-size: 7px; padding: 1px 3px; }
-  .post-body { padding: 7px 9px 0; }
-  .post-caption { font-size: 11px; line-height: 1.6; }
-  .post-actions { padding: 5px 7px 7px; }
-  .action-btn { font-size: 7.5px; padding: 4px 5px; gap: 3px; }
-  .action-btn svg { width: 10px; height: 10px; }
+  .piece-editorial { padding: 12px 12px 8px; }
+  .piece-title { font-size: clamp(14px, 4.5vw, 18px); }
+  .piece-body { font-size: 11px; -webkit-line-clamp: 3; }
+  .piece-byline { padding-top: 8px; gap: 5px; }
+  .piece-actions { padding: 5px 9px 7px; }
+  .piece-btn { font-size: 8px; padding: 4px 5px; }
+  .piece-btn svg { width: 10px; height: 10px; }
 
   .section-rule { padding: 36px 0 24px; }
 
