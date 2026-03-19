@@ -861,32 +861,53 @@ footer { background: var(--text); border-top: 3px solid var(--text); }
   /* About grid — single column, photo stacks on top */
   .about-grid { grid-template-columns: 1fr; gap: 20px; padding-bottom: 40px; }
 
-  /* Photo col — full width, no side-by-side on mobile */
-  .about-photo-col { flex-direction: column; gap: 16px; margin-top: 0; }
-  .about-photo-frame {
-    flex: none; width: 100%;
-    /* Reduce tilt on mobile so it doesn't clip */
-    transform: rotate(0.4deg);
-    max-width: 280px; margin: 0 auto;
+  /* Photo col — row layout: small photo left, stats right */
+  .about-photo-col {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 0;
   }
-  .about-photo-frame:hover { transform: rotate(0deg) scale(1.01); }
-  /* Photo height — fits within the clipping without overflow */
-  .about-photo { height: 220px; object-fit: cover; object-position: center top; }
-  .about-photo-label { font-size: 9px; padding: 5px 8px; }
+  .about-photo-frame {
+    flex: 0 0 110px;     /* fixed small width — portrait thumbnail */
+    width: 110px;
+    max-width: 110px;
+    transform: none !important;
+    overflow: hidden;
+  }
+  .about-photo-frame::before,
+  .about-photo-frame::after { display: none; }
+  .about-photo-frame:hover { transform: none !important; }
+  .about-photo {
+    width: 110px;
+    height: 130px;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .about-photo-label { font-size: 8px; padding: 4px 6px; letter-spacing: 0.08em; }
 
-  /* Stats — 3-col grid below the photo */
+  /* Stats — vertical list beside the photo */
   .about-stats {
-    display: grid; grid-template-columns: repeat(3, 1fr);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     height: auto;
+    border: 1px solid rgba(20,14,4,0.22);
   }
   .about-stat {
-    flex-direction: column; border-right: 1px solid rgba(20,14,4,0.18);
-    border-bottom: none; padding: 12px 6px;
-    justify-content: center; align-items: center; text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 10px 10px;
+    border-right: none;
+    border-bottom: 1px solid rgba(20,14,4,0.15);
   }
-  .about-stat:last-child { border-right: none; }
-  .stat-num { font-size: 20px; }
-  .stat-label { font-size: 8px; text-align: center; }
+  .about-stat:last-child { border-bottom: none; }
+  .stat-num { font-size: 18px; }
+  .stat-label { font-size: 8px; text-align: right; max-width: 70px; }
 
   .about-headline { font-size: clamp(24px, 8vw, 38px); margin-bottom: 14px; }
   .about-body p { font-size: 13px; }
@@ -921,8 +942,8 @@ footer { background: var(--text); border-top: 3px solid var(--text); }
   .feed-header h1 { font-size: clamp(28px, 12vw, 40px); }
   .feed-header-meta { flex-direction: column; align-items: flex-start; gap: 2px; }
   /* Photo even more compact on tiny screens */
-  .about-photo { height: 180px; }
-  .about-photo-frame { max-width: 240px; }
+  .about-photo-frame { flex: 0 0 90px; width: 90px; max-width: 90px; }
+  .about-photo { width: 90px; height: 110px; }
   .contact-cards { grid-template-columns: 1fr; outline: none; }
   .contact-card:last-child { grid-column: auto; border-top: none; }
   .contact-card:nth-child(1), .contact-card:nth-child(2) { border-bottom: 1px solid var(--border2); }
