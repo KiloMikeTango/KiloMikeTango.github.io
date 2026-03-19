@@ -22,6 +22,7 @@ initLightbox();
 initMobileNav();
 initScrollBehavior();
 initContactCards();
+initReveal();
 
 /* ══════════════════════════════
    THEME — light only
@@ -122,10 +123,17 @@ function handleLike(btn) {
   s.count += s.liked ? 1 : -1;
   btn.classList.toggle('liked', s.liked);
   btn.querySelector('svg').setAttribute('fill', s.liked ? 'currentColor' : 'none');
-  btn.querySelector('.like-count').textContent = s.count;
+
+  // Animate count change
+  const counter = btn.querySelector('.like-count');
+  counter.textContent = s.count;
+
   if (s.liked) {
-    btn.style.transform = 'scale(1.3)';
-    setTimeout(() => { btn.style.transform = ''; }, 180);
+    // Remove then re-add class to retrigger animation
+    btn.classList.remove('pop');
+    void btn.offsetWidth; // force reflow
+    btn.classList.add('pop');
+    btn.addEventListener('animationend', () => btn.classList.remove('pop'), { once: true });
   }
 }
 
@@ -267,6 +275,39 @@ function copyRow(row) {
       showToast(`"${text}" copied`);
     })
     .catch(() => showToast('Could not copy'));
+}
+
+
+/* ══════════════════════════════
+   SCROLL REVEAL
+   Pieces and clipping reveal as
+   they enter the viewport.
+══════════════════════════════ */
+function initReveal() {
+  // Pieces — staggered reveal as columns scroll in
+  const pieceObserver = new IntersectionObserver(
+    entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      pieceObserver.unobserve(entry.target);
+    }),
+    { rootMargin: '-4% 0px', threshold: 0.08 }
+  );
+  document.querySelectorAll('article.piece').forEach(p => pieceObserver.observe(p));
+
+  // Clipping — reveal the about newspaper clipping
+  const clipping = document.querySelector('.clipping');
+  if (clipping) {
+    const clipObserver = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        clipping.classList.add('is-visible');
+        clipObserver.unobserve(clipping);
+      }),
+      { rootMargin: '-8%', threshold: 0.1 }
+    );
+    clipObserver.observe(clipping);
+  }
 }
 
 /* ══════════════════════════════
