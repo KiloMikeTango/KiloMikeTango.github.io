@@ -902,28 +902,29 @@ footer { background: var(--text); border-top: 3px solid var(--text); }
   }
   .about-photo-label { font-size: 8px; padding: 4px 6px; letter-spacing: 0.08em; }
 
-  /* Stats — vertical list beside the photo */
+  /* Stats — 3-column grid, square cells */
   .about-stats {
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     height: auto;
+    align-self: flex-start;
     border: 1px solid rgba(20,14,4,0.22);
   }
   .about-stat {
-    flex: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    text-align: left;
-    padding: 10px 10px;
-    border-right: none;
-    border-bottom: 1px solid rgba(20,14,4,0.15);
+    justify-content: center;
+    text-align: center;
+    aspect-ratio: 1 / 1;
+    padding: 6px 4px;
+    border-right: 1px solid rgba(20,14,4,0.15);
+    border-bottom: none;
   }
-  .about-stat:last-child { border-bottom: none; }
-  .stat-num { font-size: 18px; }
-  .stat-label { font-size: 8px; text-align: right; max-width: 70px; }
+  .about-stat:last-child { border-right: none; }
+  .stat-num { font-size: 16px; }
+  .stat-label { font-size: 7px; text-align: center; margin-top: 3px; }
 
   .about-headline { font-size: clamp(24px, 8vw, 38px); margin-bottom: 14px; }
   .about-body p { font-size: 13px; }
