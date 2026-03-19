@@ -11,8 +11,12 @@
   <link rel="apple-touch-icon" href="favicon.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- font-display:swap prevents FOIT — text shows immediately in fallback font -->
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap&font-display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- Preload pfp so About section image is ready instantly -->
+  <link rel="preload" href="pfp.png" as="image">
 </head>
 <body>
 
@@ -541,8 +545,8 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 
-  <script src="data/posts.js"></script>
-  <script src="js/renderer.js"></script>
-  <script src="js/main.js"></script>
+  <script src="data/posts.js" defer></script>
+  <script src="js/renderer.js" defer></script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>

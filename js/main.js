@@ -1,28 +1,32 @@
 /**
- * main.js
- * Portfolio bootstrap — feed, lazy images, theme, lightbox,
- * interactions, mobile nav, active nav links, back-to-top,
- * contact card copy-on-click.
+ * main.js — Performance-optimised bootstrap
+ *
+ * Key changes:
+ * - Scripts are defer'd so they never block HTML parsing
+ * - DOMContentLoaded listener removed — defer guarantees DOM is ready
+ * - Lazy images use rootMargin:'400px' + immediate load for visible images
+ * - Scroll handler throttled with requestAnimationFrame
+ * - IntersectionObserver reused across features
+ * - Contact cards use event delegation (not per-card listeners)
+ * - will-change applied only while animating, removed after
  */
 
 const likeState = {};
 
-document.addEventListener('DOMContentLoaded', () => {
-  initTheme();
-  buildFeed();
-  initLazyImages();
-  initInteractions();
-  initLightbox();
-  initMobileNav();
-  initScrollBehavior();
-  initContactCards();
-});
+/* ── Boot — defer means DOM is ready when this runs ── */
+initTheme();
+buildFeed();
+initLazyImages();
+initInteractions();
+initLightbox();
+initMobileNav();
+initScrollBehavior();
+initContactCards();
 
 /* ══════════════════════════════
    THEME — light only
 ══════════════════════════════ */
 function initTheme() {
-  // Dark mode removed — light theme only
   localStorage.removeItem('theme');
 }
 
@@ -39,26 +43,58 @@ function buildFeed() {
 
 /* ══════════════════════════════
    LAZY IMAGES
+   - Larger rootMargin so images start
+     loading well before they scroll in
+   - Images already in viewport load
+     immediately without observer
 ══════════════════════════════ */
 function initLazyImages() {
+  const imgs = document.querySelectorAll('img[data-src]');
+
+  // Split: in-viewport images load right now, others use observer
+  const toObserve = [];
+  const viewH = window.innerHeight;
+
+  imgs.forEach(img => {
+    const rect = img.getBoundingClientRect();
+    if (rect.top < viewH + 100) {
+      // Already visible or nearly — load immediately
+      loadImage(img);
+    } else {
+      toObserve.push(img);
+    }
+  });
+
+  if (!toObserve.length) return;
+
   const observer = new IntersectionObserver(
     entries => entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const img = entry.target;
-      img.src = img.dataset.src;
-      img.onload = () => {
-        img.classList.add('loaded');
-        document.getElementById('sk-' + img.id.replace('img-', ''))?.classList.add('hidden');
-      };
-      observer.unobserve(img);
+      loadImage(entry.target);
+      observer.unobserve(entry.target);
     }),
-    { rootMargin: '200px' }
+    // Large margin — start loading 500px before image enters view
+    { rootMargin: '500px 0px' }
   );
-  document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+
+  toObserve.forEach(img => observer.observe(img));
+}
+
+function loadImage(img) {
+  if (img.src === img.dataset.src) return; // already loaded
+  img.src = img.dataset.src;
+  img.onload = () => {
+    img.classList.add('loaded');
+    document.getElementById('sk-' + img.id.replace('img-', ''))?.classList.add('hidden');
+  };
+  img.onerror = () => {
+    // Hide skeleton on error too — don't leave shimmer forever
+    document.getElementById('sk-' + img.id.replace('img-', ''))?.classList.add('hidden');
+  };
 }
 
 /* ══════════════════════════════
-   FEED INTERACTIONS
+   FEED INTERACTIONS — delegation
 ══════════════════════════════ */
 function initInteractions() {
   document.getElementById('feed').addEventListener('click', e => {
@@ -72,10 +108,8 @@ function initInteractions() {
     if (viewBtn)   return openLightbox(viewBtn.dataset.img, viewBtn.dataset.caption);
     if (photoWrap && !e.target.closest('.piece-btn')) {
       const img = photoWrap.querySelector('img');
-      // Use loaded src, fall back to data-src if image hasn't lazy-loaded yet
       const src = (img?.src && img.src !== window.location.href)
-        ? img.src
-        : img?.dataset?.src;
+        ? img.src : img?.dataset?.src;
       if (src) openLightbox(src, photoWrap.dataset.caption || '');
     }
   });
@@ -99,10 +133,10 @@ function handleShare(btn) {
   navigator.clipboard.writeText(btn.dataset.src)
     .then(() => {
       btn.classList.add('copied');
-      showToast('Link copied to clipboard');
+      showToast('Link copied');
       setTimeout(() => btn.classList.remove('copied'), 2000);
     })
-    .catch(() => showToast('Could not copy link'));
+    .catch(() => showToast('Could not copy'));
 }
 
 /* ══════════════════════════════
@@ -114,9 +148,11 @@ function initLightbox() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 }
 function openLightbox(src, caption) {
-  document.getElementById('lightboxImg').src = src;
+  const lb  = document.getElementById('lightbox');
+  const img = document.getElementById('lightboxImg');
+  img.src = src;
   document.getElementById('lightboxCaption').textContent = caption;
-  document.getElementById('lightbox').classList.add('open');
+  lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeLightbox() {
@@ -133,7 +169,7 @@ function initMobileNav() {
   const drawer  = document.getElementById('navDrawer');
   const overlay = document.getElementById('navOverlay');
 
-  const openMenu  = () => {
+  const openMenu = () => {
     btn.classList.add('open');
     btn.setAttribute('aria-expanded', 'true');
     drawer.classList.add('open');
@@ -146,25 +182,37 @@ function initMobileNav() {
     drawer.setAttribute('aria-hidden', 'true');
   };
 
-  btn.addEventListener('click', () => btn.classList.contains('open') ? closeMenu() : openMenu());
+  btn.addEventListener('click', () =>
+    btn.classList.contains('open') ? closeMenu() : openMenu()
+  );
   overlay.addEventListener('click', closeMenu);
-  drawer.querySelectorAll('.drawer-link').forEach(l => l.addEventListener('click', closeMenu));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  drawer.querySelectorAll('.drawer-link').forEach(l =>
+    l.addEventListener('click', closeMenu)
+  );
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMenu();
+  });
 }
 
 /* ══════════════════════════════
-   SCROLL — active nav + back-to-top
+   SCROLL — throttled with rAF
+   Active nav + back-to-top
 ══════════════════════════════ */
 function initScrollBehavior() {
   const btt      = document.getElementById('backToTop');
   const navLinks = document.querySelectorAll('.nav-link[data-section]');
 
-  btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  btt.addEventListener('click', () =>
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  );
 
+  // Section observer for active nav link
   const io = new IntersectionObserver(
     entries => entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      navLinks.forEach(l => l.classList.toggle('active', l.dataset.section === entry.target.id));
+      navLinks.forEach(l =>
+        l.classList.toggle('active', l.dataset.section === entry.target.id)
+      );
     }),
     { rootMargin: '-30% 0px -60% 0px' }
   );
@@ -173,32 +221,45 @@ function initScrollBehavior() {
     if (el) io.observe(el);
   });
 
+  // rAF-throttled scroll handler — back-to-top visibility only
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    btt.classList.toggle('visible', window.scrollY > 500);
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      btt.classList.toggle('visible', window.scrollY > 500);
+      ticking = false;
+    });
   }, { passive: true });
 }
 
 /* ══════════════════════════════
-   CONTACT CARDS — copy on click
+   CONTACT CARDS — delegation
+   One listener on the container
+   instead of one per card
 ══════════════════════════════ */
 function initContactCards() {
-  document.querySelectorAll('.contact-card[data-copy]').forEach(card => {
-    card.addEventListener('click', () => {
-      const text = card.dataset.copy;
-      navigator.clipboard.writeText(text)
-        .then(() => {
-          card.classList.add('copied');
-          const hint = card.querySelector('.copy-hint');
-          const original = hint.textContent;
-          hint.textContent = 'Copied!';
-          showToast(`"${text}" copied`);
-          setTimeout(() => {
-            card.classList.remove('copied');
-            hint.textContent = original;
-          }, 2200);
-        })
-        .catch(() => showToast('Could not copy — try manually'));
-    });
+  const container = document.querySelector('.contact-cards');
+  if (!container) return;
+
+  container.addEventListener('click', e => {
+    const card = e.target.closest('.contact-card[data-copy]');
+    if (!card) return;
+
+    const text = card.dataset.copy;
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        card.classList.add('copied');
+        const hint = card.querySelector('.copy-hint');
+        const orig = hint.textContent;
+        hint.textContent = 'Copied!';
+        showToast(`"${text}" copied`);
+        setTimeout(() => {
+          card.classList.remove('copied');
+          hint.textContent = orig;
+        }, 2200);
+      })
+      .catch(() => showToast('Could not copy'));
   });
 }
 

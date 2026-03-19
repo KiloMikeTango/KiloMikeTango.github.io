@@ -53,11 +53,14 @@ body {
 /* Subtle halftone press texture on body */
 body::before {
   content: '';
-  position: fixed; inset: 0;
-  z-index: 9999; pointer-events: none;
+  /* absolute not fixed — fixed repaints on every scroll frame */
+  position: absolute; inset: 0;
+  z-index: 0; pointer-events: none;
   opacity: 0.018;
   background-image: radial-gradient(circle, #0e0c07 1px, transparent 1px);
   background-size: 5px 5px;
+  /* own layer — prevents invalidating body paint */
+  will-change: opacity;
 }
 
 /* Section wrapper */
@@ -92,6 +95,8 @@ body::before {
   backdrop-filter: blur(16px) saturate(1.3);
   -webkit-backdrop-filter: blur(16px) saturate(1.3);
   border-bottom: 3px solid var(--text);
+  /* Promote to own compositor layer — prevents scroll jank */
+  will-change: transform;
 }
 #nav::before {
   content: '';
@@ -278,10 +283,12 @@ article.piece {
   margin-bottom: 0;
   vertical-align: top; position: relative;
   transition: box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
+  /* Stable base layer — prevents reflow of sibling cards on hover */
+  transform: translateZ(0);
 }
 article.piece:hover {
   box-shadow: var(--shadow-hover);
-  transform: translate(-2px, -2px);
+  transform: translate(-2px, -2px) translateZ(0);
   z-index: 2;
 }
 
@@ -294,6 +301,8 @@ article.piece:hover {
   display: block; width: 100%; height: auto; opacity: 0;
   transition: opacity 0.42s ease, filter 0.42s ease;
   filter: grayscale(5%);
+  /* Promote image to own layer for smooth hover scale */
+  will-change: transform, opacity;
 }
 .piece-photo img.loaded { opacity: 1; }
 .piece-photo:hover img { filter: grayscale(0%); transform: scale(1.02); transition: opacity 0.42s ease, filter 0.42s ease, transform 0.55s var(--ease); }
@@ -304,6 +313,7 @@ article.piece:hover {
   background: var(--skeleton);
   background-image: linear-gradient(90deg, var(--skeleton) 0%, var(--skeleton-shine) 50%, var(--skeleton) 100%);
   background-size: 200% 100%; animation: shimmer 1.6s infinite; transition: opacity 0.4s ease;
+  will-change: background-position;
 }
 .skeleton-img.hidden { opacity: 0; pointer-events: none; }
 @keyframes shimmer {
@@ -453,6 +463,11 @@ article.piece:hover {
   filter: url(#clippingShadow);
   overflow: hidden;
   padding: 52px 52px 64px;
+  /* Own compositor layer — SVG filter + clip-path are expensive;
+     isolating them prevents the rest of the page repainting */
+  will-change: transform;
+  /* contain layout so internal changes don't trigger full-page reflow */
+  contain: layout style;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)' opacity='0.09'/%3E%3C/svg%3E"),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.012 0.48' numOctaves='3' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23f)' opacity='0.07'/%3E%3C/svg%3E"),
@@ -474,7 +489,7 @@ article.piece:hover {
     radial-gradient(ellipse 20% 14% at 48% 52%, rgba(60,42,10,0.03) 0%, transparent 100%),
     radial-gradient(ellipse 28% 20% at 94% 5%,  rgba(48,30,5,0.05) 0%, transparent 100%),
     radial-gradient(ellipse 25% 18% at 4% 96%,  rgba(46,30,5,0.04) 0%, transparent 100%);
-  mix-blend-mode: multiply;
+  /* mix-blend-mode removed — forces compositing of entire subtree, costly on mobile */
 }
 
 .clipping::after {
@@ -756,6 +771,7 @@ footer { background: var(--text); border-top: 3px solid var(--text); }
   position: relative; z-index: 1;
   max-width: min(92vw, 920px); max-height: 92vh;
   transform: translateY(14px); transition: transform 0.32s var(--spring);
+  will-change: transform;
   border: 2px solid rgba(245,243,238,0.18);
   box-shadow: 6px 6px 0 rgba(245,243,238,0.06);
 }
