@@ -444,71 +444,66 @@
       <div class="section-wrapper">
         <div class="section-rule"><span></span><span></span></div>
 
-        <div class="contact-centered">
+        <div class="contact-editorial">
 
-          <div class="about-section-label">Contact</div>
+          <!-- Masthead-style section flag -->
+          <div class="contact-flag">
+            <span class="contact-flag-rule"></span>
+            <span class="contact-flag-text">Classifieds</span>
+            <span class="contact-flag-rule"></span>
+          </div>
+
+          <!-- Big broadsheet headline -->
           <h2 class="contact-headline">Let's make <em>something</em> together.</h2>
-          <p class="contact-sub">Available for collaborations.</p>
 
-          <div class="contact-cards">
+          <!-- Typeset subtitle — like a deck under a headline -->
+          <p class="contact-deck">Available for collaborations · Myanmar</p>
 
-            <!-- Email — click to copy -->
-            <button class="contact-card" data-copy="thuk6810@gmail.com" aria-label="Copy email address">
-              <div class="contact-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2"/>
-                  <path d="M2 7l10 7 10-7"/>
-                </svg>
-              </div>
-              <div class="contact-card-body">
-                <span class="contact-card-label">Email</span>
-                <span class="contact-card-value">thuk6810@gmail.com</span>
-              </div>
-              <div class="contact-card-action">
-                <span class="copy-hint">Click to copy</span>
-                <svg class="copy-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="5" y="5" width="9" height="9" rx="1"/>
-                  <path d="M10 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/>
-                </svg>
-              </div>
-            </button>
+          <!-- The classified ad box — double ruled border, two-column typeset layout -->
+          <div class="contact-listing">
 
-            <!-- Telegram — click to copy -->
-            <button class="contact-card" data-copy="@Kilo532" aria-label="Copy Telegram username">
-              <div class="contact-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M21.2 4.3L2.8 11.2c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.5c.2.6.5.8.9.8.3 0 .6-.1.9-.4l2.7-2.6 5.2 3.8c1 .5 1.6.3 1.9-.9l3.2-15c.4-1.5-.6-2.2-1.6-1.9z"/>
-                </svg>
-              </div>
-              <div class="contact-card-body">
-                <span class="contact-card-label">Telegram</span>
-                <span class="contact-card-value">@Kilo532</span>
-              </div>
-              <div class="contact-card-action">
-                <span class="copy-hint">Click to copy</span>
-                <svg class="copy-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="5" y="5" width="9" height="9" rx="1"/>
-                  <path d="M10 5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/>
-                </svg>
-              </div>
-            </button>
-
-            <!-- Location — no copy -->
-            <div class="contact-card no-copy">
-              <div class="contact-card-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-                  <circle cx="12" cy="9" r="2.5"/>
-                </svg>
-              </div>
-              <div class="contact-card-body">
-                <span class="contact-card-label">Based in</span>
-                <span class="contact-card-value">Myanmar</span>
-              </div>
-              <div class="contact-card-action">
+            <!-- Left column — ad header -->
+            <div class="contact-listing-head">
+              <div class="contact-listing-kicker">Get in touch</div>
+              <p class="contact-listing-copy">
+                Open to freelance projects, volunteer work, and creative collaborations.
+                Reach out via email or Telegram — response within 24 hours.
+              </p>
+              <div class="contact-listing-status">
                 <span class="avail-dot"></span>
-                <span class="copy-hint">Open to projects</span>
+                <span>Currently available</span>
               </div>
+            </div>
+
+            <!-- Right column — contact details as typeset rows -->
+            <div class="contact-listing-details">
+
+              <div class="contact-row" data-copy="thuk6810@gmail.com" role="button" tabindex="0" aria-label="Copy email">
+                <span class="contact-row-label">Email</span>
+                <span class="contact-row-dots"></span>
+                <span class="contact-row-value">thuk6810@gmail.com</span>
+                <span class="contact-row-action">copy</span>
+              </div>
+
+              <div class="contact-row" data-copy="@Kilo532" role="button" tabindex="0" aria-label="Copy Telegram">
+                <span class="contact-row-label">Telegram</span>
+                <span class="contact-row-dots"></span>
+                <span class="contact-row-value">@Kilo532</span>
+                <span class="contact-row-action">copy</span>
+              </div>
+
+              <div class="contact-row no-copy">
+                <span class="contact-row-label">Based in</span>
+                <span class="contact-row-dots"></span>
+                <span class="contact-row-value">Myanmar</span>
+              </div>
+
+              <div class="contact-row no-copy">
+                <span class="contact-row-label">Status</span>
+                <span class="contact-row-dots"></span>
+                <span class="contact-row-value">Open to projects</span>
+              </div>
+
             </div>
 
           </div>

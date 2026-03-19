@@ -239,28 +239,34 @@ function initScrollBehavior() {
    instead of one per card
 ══════════════════════════════ */
 function initContactCards() {
-  const container = document.querySelector('.contact-cards');
+  const container = document.querySelector('.contact-listing-details');
   if (!container) return;
 
-  container.addEventListener('click', e => {
-    const card = e.target.closest('.contact-card[data-copy]');
-    if (!card) return;
-
-    const text = card.dataset.copy;
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        card.classList.add('copied');
-        const hint = card.querySelector('.copy-hint');
-        const orig = hint.textContent;
-        hint.textContent = 'Copied!';
-        showToast(`"${text}" copied`);
-        setTimeout(() => {
-          card.classList.remove('copied');
-          hint.textContent = orig;
-        }, 2200);
-      })
-      .catch(() => showToast('Could not copy'));
+  // keyboard support for rows
+  container.querySelectorAll('.contact-row[data-copy]').forEach(row => {
+    row.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyRow(row); }
+    });
   });
+
+  container.addEventListener('click', e => {
+    const row = e.target.closest('.contact-row[data-copy]');
+    if (row) copyRow(row);
+  });
+}
+
+function copyRow(row) {
+  const text = row.dataset.copy;
+  const action = row.querySelector('.contact-row-action');
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      row.classList.add('copied');
+      if (action) { const orig = action.textContent; action.textContent = 'copied!';
+        setTimeout(() => { row.classList.remove('copied'); action.textContent = orig; }, 2000);
+      }
+      showToast(`"${text}" copied`);
+    })
+    .catch(() => showToast('Could not copy'));
 }
 
 /* ══════════════════════════════
