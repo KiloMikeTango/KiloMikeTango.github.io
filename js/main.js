@@ -65,15 +65,18 @@ function initInteractions() {
     const likeBtn   = e.target.closest('.like-btn');
     const shareBtn  = e.target.closest('.share-btn');
     const viewBtn   = e.target.closest('.view-btn');
-    const imageWrap = e.target.closest('.post-image-wrap');
+    const photoWrap = e.target.closest('.piece-photo');
 
     if (likeBtn)   return handleLike(likeBtn);
     if (shareBtn)  return handleShare(shareBtn);
     if (viewBtn)   return openLightbox(viewBtn.dataset.img, viewBtn.dataset.caption);
-    if (imageWrap && !e.target.closest('.action-btn')) {
-      const img = imageWrap.querySelector('img');
-      if (img?.src && img.src !== window.location.href)
-        openLightbox(img.src, imageWrap.dataset.caption || '');
+    if (photoWrap && !e.target.closest('.piece-btn')) {
+      const img = photoWrap.querySelector('img');
+      // Use loaded src, fall back to data-src if image hasn't lazy-loaded yet
+      const src = (img?.src && img.src !== window.location.href)
+        ? img.src
+        : img?.dataset?.src;
+      if (src) openLightbox(src, photoWrap.dataset.caption || '');
     }
   });
 }
